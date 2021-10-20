@@ -1,6 +1,6 @@
 <script>
-import { DatePicker, DatePickerOptions } from 'element-ui'
-import { calendarShortcuts } from '@/utils/shortcuts'
+// import { DatePicker, DatePickerOptions } from 'element-ui'
+import { DatePicker } from 'element-ui'
 
 export default {
   name: 'DateRangePicker',
@@ -18,12 +18,12 @@ export default {
       type: Array,
       default: _ => ['00:00:00', '23:59:59']
     },
-    pickerOptions: {
-      type: DatePickerOptions,
-      default: _ => {
-        return { shortcuts: calendarShortcuts }
-      }
-    },
+    // pickerOptions: {
+    //   type: DatePickerOptions,
+    //   default: _ => {
+    //     return { shortcuts: calendarShortcuts }
+    //   }
+    // },
     size: {
       type: String,
       default: 'small'

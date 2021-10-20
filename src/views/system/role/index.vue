@@ -4,7 +4,7 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
-        <el-input v-model="query.blurry" size="small" clearable placeholder="输入名称或者描述搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <el-input v-model="query.blurry" size="small" clearable placeholder="Search by role name and description" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <date-range-picker v-model="query.createTime" class="date-item" />
         <rrOperation />
       </div>
@@ -20,32 +20,34 @@
           <el-input-number v-model.number="form.level" :min="1" controls-position="right" style="width: 145px;" />
         </el-form-item>
         <el-form-item label="Scope" prop="dataScope">
-          <el-select v-model="form.dataScope" style="width: 140px" placeholder="请选择数据范围" @change="changeScope">
+          <el-select v-model="form.dataScope" style="width: 140px" placeholder="Please choose the scope" @change="changeScope">
             <el-option
               v-for="item in dateScopes"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
+              :key="item.label"
+              :label="item.label"
+              :value="item.value"
+            >
+              <span style="color: #8492a6; font-size: 13px">{{ item.label }}</span>
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="form.dataScope === '自定义'" label="数据权限" prop="depts">
+        <el-form-item v-if="form.dataScope === '自定义'" label="Data authority" prop="depts">
           <treeselect
             v-model="deptDatas"
             :load-options="loadDepts"
             :options="depts"
             multiple
             style="width: 380px"
-            placeholder="请选择"
+            placeholder="Please choose"
           />
         </el-form-item>
-        <el-form-item label="描述信息" prop="description">
+        <el-form-item label="description" prop="description">
           <el-input v-model="form.description" style="width: 380px;" rows="5" type="textarea" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="text" @click="crud.cancelCU">取消</el-button>
-        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
+        <el-button type="text" @click="crud.cancelCU">cancel</el-button>
+        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">confirm</el-button>
       </div>
     </el-dialog>
     <el-row :gutter="15">
@@ -58,7 +60,15 @@
           <el-table ref="table" v-loading="crud.loading" highlight-current-row style="width: 100%;" :data="crud.data" @selection-change="crud.selectionChangeHandler" @current-change="handleCurrentChange">
             <el-table-column :selectable="checkboxT" type="selection" width="55" />
             <el-table-column prop="name" label="Name" />
-            <el-table-column prop="dataScope" label="数据权限" />
+            <!--            <el-table-column prop="dataScope" label="Data Authority" />-->
+            <el-table-column prop="dataScope" label="Data Authority">
+              <!--              数据的遍历  scope.row就代表数据的每一个对象-->
+              <template scope="scope">
+                <p v-if="scope.row.dataScope=='全部'">All</p>
+                <p v-if="scope.row.dataScope=='自定义'">Default</p>
+                <p v-if="scope.row.dataScope=='本级'">Level</p>
+              </template>
+            </el-table-column>
             <el-table-column prop="level" label="Role Level" />
             <el-table-column :show-overflow-tooltip="true" prop="description" label="Description" />
             <el-table-column :show-overflow-tooltip="true" width="135px" prop="createTime" label="Creation Date" />
@@ -80,8 +90,8 @@
       <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="7">
         <el-card class="box-card" shadow="never">
           <div slot="header" class="clearfix">
-            <el-tooltip class="item" effect="dark" content="选择指定角色分配菜单" placement="top">
-              <span class="role-span">菜单分配</span>
+            <el-tooltip class="item" effect="dark" content="Select the Specify Role Assignment menu" placement="top">
+              <span class="role-span">Menu Assignment</span>
             </el-tooltip>
             <el-button
               v-permission="['admin','roles:edit']"
@@ -92,7 +102,7 @@
               style="float: right; padding: 6px 9px"
               type="primary"
               @click="saveMenu"
-            >保存</el-button>
+            >save</el-button>
           </div>
           <el-tree
             ref="menu"
@@ -127,18 +137,29 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 import DateRangePicker from '@/components/DateRangePicker'
 
-const defaultForm = { id: null, name: null, depts: [], description: null, dataScope: '全部', level: 3 }
+const defaultForm = { id: null, name: null, depts: [], description: null, dataScope: 'All', level: 3 }
 export default {
   name: 'Role',
   components: { Treeselect, pagination, crudOperation, rrOperation, udOperation, DateRangePicker },
   cruds() {
-    return CRUD({ title: '角色', url: 'api/roles', sort: 'level,asc', crudMethod: { ...crudRoles }})
+    return CRUD({ title: 'Role', url: 'api/roles', sort: 'level,asc', crudMethod: { ...crudRoles }})
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data() {
     return {
       defaultProps: { children: 'children', label: 'label', isLeaf: 'leaf' },
-      dateScopes: ['全部', '本级', '自定义'], level: 3,
+      // dateScopes: ['All', 'Level', 'Default'],
+      dateScopes: [{
+        value: '全部',
+        label: 'All'
+      }, {
+        value: '默认',
+        label: 'Default'
+      }, {
+        value: '本级',
+        label: 'Level'
+      }],
+      level: 3,
       currentId: 0, menuLoading: false, showButton: false,
       menus: [], menuIds: [], depts: [], deptDatas: [], // 多选时使用
       permission: {
@@ -148,10 +169,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'blur' }
+          { required: true, message: 'Please enter a name', trigger: 'blur' }
         ],
         permission: [
-          { required: true, message: '请输入权限', trigger: 'blur' }
+          { required: true, message: 'Please enter permission', trigger: 'blur' }
         ]
       }
     }
@@ -194,7 +215,7 @@ export default {
     [CRUD.HOOK.afterValidateCU](crud) {
       if (crud.form.dataScope === '自定义' && this.deptDatas.length === 0) {
         this.$message({
-          message: '自定义数据权限不能为空',
+          message: 'Custom data permissions cannot be empty',
           type: 'warning'
         })
         return false
@@ -258,7 +279,7 @@ export default {
         role.menus.push(menu)
       })
       crudRoles.editMenu(role).then(() => {
-        this.crud.notify('保存成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
+        this.crud.notify('saved successfully', CRUD.NOTIFICATION_TYPE.SUCCESS)
         this.menuLoading = false
         this.update()
       }).catch(err => {

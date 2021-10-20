@@ -135,8 +135,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button type="text" @click="crud.cancelCU">取消</el-button>
-            <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
+            <el-button type="text" @click="crud.cancelCU">Cancel</el-button>
+            <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">Confirm</el-button>
           </div>
         </el-dialog>
         <!--表格渲染-->
@@ -219,9 +219,9 @@ export default {
     // 自定义验证
     const validPhone = (rule, value, callback) => {
       if (!value) {
-        callback(new Error('请输入电话号码'))
+        callback(new Error('Please enter your phone number'))
       } else if (!isvalidPhone(value)) {
-        callback(new Error('请输入正确的11位手机号码'))
+        callback(new Error('Please enter the correct 11-digit mobile phone number'))
       } else {
         callback()
       }
@@ -237,21 +237,21 @@ export default {
         del: ['admin', 'user:del']
       },
       enabledTypeOptions: [
-        { key: 'true', display_name: '激活' },
-        { key: 'false', display_name: '锁定' }
+        { key: 'true', display_name: 'Activate' },
+        { key: 'false', display_name: 'Lock' }
       ],
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          { required: true, message: 'Please input user name', trigger: 'blur' },
+          { min: 2, max: 20, message: 'The length is 2 to 20 characters', trigger: 'blur' }
         ],
         nickName: [
-          { required: true, message: '请输入用户昵称', trigger: 'blur' },
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          { required: true, message: 'Please enter a user nickname', trigger: 'blur' },
+          { min: 2, max: 20, message: 'The length is 2 to 20 characters', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
+          { required: true, message: 'Please enter your email address', trigger: 'blur' },
+          { type: 'email', message: 'Please enter the correct email address', trigger: 'blur' }
         ],
         phone: [
           { required: true, trigger: 'blur', validator: validPhone }
@@ -265,7 +265,7 @@ export default {
     ])
   },
   created() {
-    this.crud.msg.add = '新增成功，默认密码：123456'
+    this.crud.msg.add = 'added successfully，initial password：123456'
   },
   mounted: function() {
     const that = this
@@ -335,19 +335,19 @@ export default {
     [CRUD.HOOK.afterValidateCU](crud) {
       if (!crud.form.dept.id) {
         this.$message({
-          message: '部门不能为空',
+          message: 'Departments cannot be empty',
           type: 'warning'
         })
         return false
       } else if (this.jobDatas.length === 0) {
         this.$message({
-          message: '岗位不能为空',
+          message: 'The post cannot be empty',
           type: 'warning'
         })
         return false
       } else if (this.roleDatas.length === 0) {
         this.$message({
-          message: '角色不能为空',
+          message: 'The role cannot be empty',
           type: 'warning'
         })
         return false
@@ -431,13 +431,13 @@ export default {
     },
     // 改变状态
     changeEnabled(data, val) {
-      this.$confirm('此操作将 "' + this.dict.label.user_status[val] + '" ' + data.username + ', 是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('This operation will "' + this.dict.label.user_status[val] + '" ' + data.username + ', Do you want to continue？', 'Tip', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         crudUser.edit(data).then(res => {
-          this.crud.notify(this.dict.label.user_status[val] + '成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
+          this.crud.notify(this.dict.label.user_status[val] + 'Successfully', CRUD.NOTIFICATION_TYPE.SUCCESS)
         }).catch(() => {
           data.enabled = !data.enabled
         })

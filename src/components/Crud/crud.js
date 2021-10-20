@@ -78,14 +78,14 @@ function CRUD(options) {
       },
       // 标题
       get title() {
-        return this.add > CRUD.STATUS.NORMAL ? `新增${crud.title}` : this.edit > CRUD.STATUS.NORMAL ? `编辑${crud.title}` : crud.title
+        return this.add > CRUD.STATUS.NORMAL ? `add ${crud.title}` : this.edit > CRUD.STATUS.NORMAL ? `edit ${crud.title}` : crud.title
       }
     },
     msg: {
-      submit: '提交成功',
-      add: '新增成功',
-      edit: '编辑成功',
-      del: '删除成功'
+      submit: 'submitted successfully',
+      add: 'Added successfully',
+      edit: 'Edited successfully',
+      del: 'Deleted successfully'
     },
     page: {
       // 页码

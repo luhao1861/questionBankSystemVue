@@ -86,7 +86,7 @@
           :indeterminate="allColumnsSelectedIndeterminate"
           @change="handleCheckAllChange"
         >
-          全选
+          All
         </el-checkbox>
         <el-checkbox
           v-for="item in tableColumns"
@@ -190,9 +190,9 @@ export default {
       this.tableColumns = columns
     },
     toDelete(datas) {
-      this.$confirm(`确认删除选中的${datas.length}条数据?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(`Are you sure to delete the ${datas.length} items selected?`, 'Tip', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         this.crud.delAllLoading = true
@@ -222,7 +222,7 @@ export default {
         selectedCount += column.visible ? 1 : 0
       })
       if (selectedCount === 0) {
-        this.crud.notify('请至少选择一列', CRUD.NOTIFICATION_TYPE.WARNING)
+        this.crud.notify('Please select at least one column', CRUD.NOTIFICATION_TYPE.WARNING)
         this.$nextTick(function() {
           item.visible = true
         })

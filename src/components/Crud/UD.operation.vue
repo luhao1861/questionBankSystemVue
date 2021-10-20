@@ -4,8 +4,8 @@
     <el-popover v-model="pop" v-permission="permission.del" placement="top" width="180" trigger="manual" @show="onPopoverShow" @hide="onPopoverHide">
       <p>{{ msg }}</p>
       <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click="doCancel">取消</el-button>
-        <el-button :loading="crud.dataStatus[crud.getDataId(data)].delete === 2" type="primary" size="mini" @click="crud.doDelete(data)">确定</el-button>
+        <el-button size="mini" type="text" @click="doCancel">Cancel</el-button>
+        <el-button :loading="crud.dataStatus[crud.getDataId(data)].delete === 2" type="primary" size="mini" @click="crud.doDelete(data)">Confirm</el-button>
       </div>
       <el-button slot="reference" :disabled="disabledDle" type="danger" icon="el-icon-delete" size="mini" @click="toDelete" />
     </el-popover>
@@ -34,7 +34,7 @@ export default {
     },
     msg: {
       type: String,
-      default: '确定删除本条数据吗？'
+      default: 'Are you sure to delete this data?'
     }
   },
   data() {

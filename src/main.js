@@ -31,11 +31,15 @@ import './assets/icons' // icon
 import './router/index' // permission control
 import 'echarts-gl'
 
+// 国际化
+import locale from 'element-ui/lib/locale/lang/en'
+
 Vue.use(checkPer)
 Vue.use(VueHighlightJS)
 Vue.use(mavonEditor)
 Vue.use(permission)
 Vue.use(dict)
+Vue.use(Element, { locale })
 Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })

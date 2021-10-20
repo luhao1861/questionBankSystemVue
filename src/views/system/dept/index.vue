@@ -16,10 +16,10 @@
     <!--表单组件-->
     <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
       <el-form ref="form" inline :model="form" :rules="rules" size="small" label-width="80px">
-        <el-form-item label="部门名称" prop="name">
+        <el-form-item label="Department Name" prop="name">
           <el-input v-model="form.name" style="width: 370px;" />
         </el-form-item>
-        <el-form-item label="部门排序" prop="deptSort">
+        <el-form-item label="Department sort" prop="deptSort">
           <el-input-number
             v-model.number="form.deptSort"
             :min="0"
@@ -28,28 +28,28 @@
             style="width: 370px;"
           />
         </el-form-item>
-        <el-form-item label="顶级部门">
+        <el-form-item label="Top Department">
           <el-radio-group v-model="form.isTop" style="width: 140px">
             <el-radio label="1">是</el-radio>
             <el-radio label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="状态" prop="enabled">
+        <el-form-item label="Status" prop="enabled">
           <el-radio v-for="item in dict.dept_status" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
         </el-form-item>
-        <el-form-item v-if="form.isTop === '0'" style="margin-bottom: 0;" label="上级部门" prop="pid">
+        <el-form-item v-if="form.isTop === '0'" style="margin-bottom: 0;" label="superior department" prop="pid">
           <treeselect
             v-model="form.pid"
             :load-options="loadDepts"
             :options="depts"
             style="width: 370px;"
-            placeholder="选择上级类目"
+            placeholder="Select the parent category"
           />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="text" @click="crud.cancelCU">取消</el-button>
-        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
+        <el-button type="text" @click="crud.cancelCU">Cancel</el-button>
+        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">Confirm</el-button>
       </div>
     </el-dialog>
     <!--表格渲染-->
@@ -80,13 +80,13 @@
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="Start Date" />
-      <el-table-column v-if="checkPer(['admin','dept:edit','dept:del'])" label="操作" width="130px" align="center" fixed="right">
+      <el-table-column v-if="checkPer(['admin','dept:edit','dept:del'])" label="Operation" width="130px" align="center" fixed="right">
         <template slot-scope="scope">
           <udOperation
             :data="scope.row"
             :permission="permission"
             :disabled-dle="scope.row.id === 1"
-            msg="确定删除吗,如果存在下级节点则一并删除，此操作不能撤销！"
+            msg="Are you sure to delete it? If there are inferior nodes, delete them altogether. This operation cannot be undone!"
           />
         </template>
       </el-table-column>
@@ -110,7 +110,7 @@ export default {
   name: 'Dept',
   components: { Treeselect, crudOperation, rrOperation, udOperation, DateRangePicker },
   cruds() {
-    return CRUD({ title: '部门', url: 'api/dept', crudMethod: { ...crudDept }})
+    return CRUD({ title: 'Department', url: 'api/dept', crudMethod: { ...crudDept }})
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   // 设置数据字典
@@ -120,10 +120,10 @@ export default {
       depts: [],
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'blur' }
+          { required: true, message: 'Please enter a name', trigger: 'blur' }
         ],
         deptSort: [
-          { required: true, message: '请输入序号', trigger: 'blur', type: 'number' }
+          { required: true, message: 'Please enter the serial number', trigger: 'blur', type: 'number' }
         ]
       },
       permission: {
@@ -132,8 +132,8 @@ export default {
         del: ['admin', 'dept:del']
       },
       enabledTypeOptions: [
-        { key: 'true', display_name: '正常' },
-        { key: 'false', display_name: '禁用' }
+        { key: 'true', display_name: 'Available' },
+        { key: 'false', display_name: 'Disabled' }
       ]
     }
   },
@@ -207,7 +207,7 @@ export default {
     [CRUD.HOOK.afterValidateCU]() {
       if (this.form.pid !== null && this.form.pid === this.form.id) {
         this.$message({
-          message: '上级部门不能为空',
+          message: 'The upper department cannot be empty',
           type: 'warning'
         })
         return false
@@ -219,13 +219,13 @@ export default {
     },
     // 改变状态
     changeEnabled(data, val) {
-      this.$confirm('此操作将 "' + this.dict.label.dept_status[val] + '" ' + data.name + '部门, 是否继续？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('This operation will "' + this.dict.label.dept_status[val] + '" ' + data.name + ' department, Do you want to continue？', 'Tip', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
         crudDept.edit(data).then(res => {
-          this.crud.notify(this.dict.label.dept_status[val] + '成功', CRUD.NOTIFICATION_TYPE.SUCCESS)
+          this.crud.notify(this.dict.label.dept_status[val] + 'Successfully', CRUD.NOTIFICATION_TYPE.SUCCESS)
         }).catch(err => {
           data.enabled = !data.enabled
           console.log(err.response.data.message)

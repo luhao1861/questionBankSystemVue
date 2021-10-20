@@ -11,8 +11,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="text" @click="crud.cancelCU">取消</el-button>
-        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
+        <el-button type="text" @click="crud.cancelCU">Cancel</el-button>
+        <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">Confirm</el-button>
       </div>
     </el-dialog>
     <!-- 字典列表 -->
@@ -23,7 +23,7 @@
           <div class="head-container">
             <div v-if="crud.props.searchToggle">
               <!-- 搜索 -->
-              <el-input v-model="query.blurry" clearable size="small" placeholder="输入名称或者描述搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+              <el-input v-model="query.blurry" clearable size="small" placeholder="Search by role name and description" style="width: 200px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
               <rrOperation />
             </div>
             <crudOperation :permission="permission" />
@@ -91,12 +91,12 @@ export default {
   data() {
     return {
       queryTypeOptions: [
-        { key: 'name', display_name: '字典名称' },
-        { key: 'description', display_name: '描述' }
+        { key: 'name', display_name: 'Diction Name' },
+        { key: 'description', display_name: 'description' }
       ],
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'blur' }
+          { required: true, message: 'Please enter a name', trigger: 'blur' }
         ]
       },
       permission: {
