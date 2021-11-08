@@ -5,22 +5,22 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-<!--      <template v-if="device!=='mobile'">-->
-<!--        <search id="header-search" class="right-menu-item" />-->
+      <!--      <template v-if="device!=='mobile'">-->
+      <!--        <search id="header-search" class="right-menu-item" />-->
 
-<!--        <el-tooltip content="项目文档" effect="dark" placement="bottom">-->
-<!--          <Doc class="right-menu-item hover-effect" />-->
-<!--        </el-tooltip>-->
+      <!--        <el-tooltip content="项目文档" effect="dark" placement="bottom">-->
+      <!--          <Doc class="right-menu-item hover-effect" />-->
+      <!--        </el-tooltip>-->
 
-<!--        <el-tooltip content="全屏缩放" effect="dark" placement="bottom">-->
-<!--          <screenfull id="screenfull" class="right-menu-item hover-effect" />-->
-<!--        </el-tooltip>-->
+      <!--        <el-tooltip content="全屏缩放" effect="dark" placement="bottom">-->
+      <!--          <screenfull id="screenfull" class="right-menu-item hover-effect" />-->
+      <!--        </el-tooltip>-->
 
-<!--        <el-tooltip content="布局设置" effect="dark" placement="bottom">-->
-<!--          <size-select id="size-select" class="right-menu-item hover-effect" />-->
-<!--        </el-tooltip>-->
+      <!--        <el-tooltip content="布局设置" effect="dark" placement="bottom">-->
+      <!--          <size-select id="size-select" class="right-menu-item hover-effect" />-->
+      <!--        </el-tooltip>-->
 
-<!--      </template>-->
+      <!--      </template>-->
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -29,9 +29,9 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <span style="display:block;" @click="show = true">
-<!--            <el-dropdown-item>-->
-<!--              布局设置-->
-<!--            </el-dropdown-item>-->
+            <!--            <el-dropdown-item>-->
+            <!--              布局设置-->
+            <!--            </el-dropdown-item>-->
           </span>
           <router-link to="/user/center">
             <el-dropdown-item>
@@ -99,9 +99,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     open() {
-      this.$confirm('确定注销并退出系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Are you sure to log out？', 'Notification', {
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
         type: 'warning'
       }).then(() => {
         this.logout()

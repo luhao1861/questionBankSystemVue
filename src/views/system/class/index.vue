@@ -5,9 +5,24 @@
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
         <!--        <label class="el-form-item-label"></label>-->
-        <el-input v-model="query.name" clearable placeholder="className" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <el-input
+          v-model="query.name"
+          clearable
+          placeholder="className"
+          style="width: 185px;"
+          class="filter-item"
+          @keyup.enter.native="crud.toQuery"
+        />
         <!--        <date-range-picker v-model="query.createTime" class="date-item" />-->
-        <el-select v-model="query.enabled" clearable size="small" placeholder="Status" class="filter-item" style="width: 90px" @change="crud.toQuery">
+        <el-select
+          v-model="query.enabled"
+          clearable
+          size="small"
+          placeholder="Status"
+          class="filter-item"
+          style="width: 90px"
+          @change="crud.toQuery"
+        >
           <el-option v-for="item in enabledTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
         <date-range-picker
@@ -27,13 +42,20 @@
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
       <crudOperation :permission="permission" />
       <!--表单组件-->
-      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
+      <el-dialog
+        :close-on-click-modal="false"
+        :before-close="crud.cancelCU"
+        :visible.sync="crud.status.cu > 0"
+        :title="crud.status.title"
+        width="500px"
+      >
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
           <el-form-item label="className" prop="name">
             <el-input v-model="form.name" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="enabled" prop="enabled">
-            <el-radio v-for="item in dict.class_status" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
+            <el-radio v-for="item in dict.class_status" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}
+            </el-radio>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -42,7 +64,14 @@
         </div>
       </el-dialog>
       <!--表格渲染-->
-      <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+      <el-table
+        ref="table"
+        v-loading="crud.loading"
+        :data="crud.data"
+        size="small"
+        style="width: 100%;"
+        @selection-change="crud.selectionChangeHandler"
+      >
         <el-table-column type="selection" width="55" />
         <el-table-column prop="name" label="className" />
         <el-table-column prop="createDate" label="createDate" />
@@ -52,7 +81,12 @@
             {{ dict.label.class_status[scope.row.enabled] }}
           </template>
         </el-table-column>
-        <el-table-column v-if="checkPer(['admin','sysClass:edit','sysClass:del'])" label="Operation" width="150px" align="center">
+        <el-table-column
+          v-if="checkPer(['admin','sysClass:edit','sysClass:del'])"
+          label="Operation"
+          width="150px"
+          align="center"
+        >
           <template slot-scope="scope">
             <udOperation
               :data="scope.row"
@@ -83,7 +117,13 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['class_status'],
   cruds() {
-    return CRUD({ title: 'class', url: 'api/sysClass', idField: 'id', sort: 'id,desc', crudMethod: { ...crudSysClass }})
+    return CRUD({
+      title: 'class',
+      url: 'api/sysClass',
+      idField: 'id',
+      sort: 'id,desc',
+      crudMethod: { ...crudSysClass }
+    })
   },
   data() {
     return {

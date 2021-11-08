@@ -1,5 +1,14 @@
 import request from '@/utils/request'
 
+export function getCourses(params) {
+  console.log('getClasses success')
+  return request({
+    url: 'api/sysClass',
+    method: 'get',
+    params
+  })
+}
+
 export function add(data) {
   return request({
     url: 'api/sysClass',
@@ -24,4 +33,4 @@ export function edit(data) {
   })
 }
 
-export default { add, edit, del }
+export default { getCourses, add, edit, del }
