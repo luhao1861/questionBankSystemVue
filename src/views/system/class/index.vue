@@ -8,7 +8,7 @@
         <el-input
           v-model="query.name"
           clearable
-          placeholder="className"
+          placeholder="Course Name"
           style="width: 185px;"
           class="filter-item"
           @keyup.enter.native="crud.toQuery"
