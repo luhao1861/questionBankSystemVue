@@ -50,8 +50,8 @@
           <!--表单组件-->
           <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
             <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-              <el-form-item label="questionContent" prop="content">
-                <el-input v-model="form.content" style="width: 370px;" />
+              <el-form-item label="Content" prop="content">
+                <el-input v-model="form.content" type="textarea" style="width: 370px;" />
               </el-form-item>
               <el-form-item label="type">
                 <el-radio v-for="item in dict.question_type" :key="item.id" v-model="form.tid" :label="item.value">{{ item.label }}</el-radio>
@@ -72,7 +72,7 @@
                 <el-radio v-for="item in dict.question_status" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
               </el-form-item>
               <el-form-item label="answer">
-                <el-input v-model="form.answer" style="width: 370px;" />
+                <el-input v-model="form.answer" type="textarea" style="width: 370px;" />
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -180,7 +180,6 @@ export default {
     // [CRUD.HOOK.beforeRefresh]() {
     //   return true
     // },
-    // 获取左侧部门数据
 
     getCourseDatas(node, resolve) {
       const sort = 'id,desc'
@@ -189,7 +188,7 @@ export default {
       //   params['name'] = node
       // }
       setTimeout(() => {
-        console.log(' 获取左侧部门数据')
+        console.log(' 获取左侧课程数据')
         console.log(params)
         getCourses(params).then(res => {
           // resolve(res.content)
@@ -207,7 +206,7 @@ export default {
         params['name'] = node
       }
       setTimeout(() => {
-        console.log(' 获取左侧部门数据')
+        console.log(' 获取左侧课程数据')
         console.log(params)
         getCourses(params).then(res => {
           // resolve(res.content)

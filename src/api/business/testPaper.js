@@ -1,17 +1,8 @@
 import request from '@/utils/request'
 
-export function getTestStrategies(params) {
-  console.log('getTestStrategies success')
-  return request({
-    url: 'api/testStrategy',
-    method: 'get',
-    params
-  })
-}
-
 export function add(data) {
   return request({
-    url: 'api/testStrategy',
+    url: 'api/testPaper',
     method: 'post',
     data
   })
@@ -19,7 +10,7 @@ export function add(data) {
 
 export function del(ids) {
   return request({
-    url: 'api/testStrategy/',
+    url: 'api/testPaper/',
     method: 'delete',
     data: ids
   })
@@ -27,7 +18,7 @@ export function del(ids) {
 
 export function edit(data) {
   return request({
-    url: 'api/testStrategy',
+    url: 'api/testPaper',
     method: 'put',
     data
   })

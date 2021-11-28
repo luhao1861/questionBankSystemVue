@@ -30,26 +30,26 @@
       <crudOperation :permission="permission" />
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item label="name" prop="name">
-            <el-input v-model="form.name" style="width: 370px;" />
+        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="130px">
+          <el-form-item label="Name" prop="name">
+            <el-input v-model="form.name" style="width: 300px;" />
           </el-form-item>
-          <el-form-item label="multiple choices amount">
-            <el-input v-model="form.mAmount" style="width: 370px;" />
+          <el-form-item label="multiple choice" prop="mAmount">
+            <el-input v-model="form.mAmount" style="width: 300px;" placeholder="amount" />
           </el-form-item>
-          <el-form-item label="q&a amount">
-            <el-input v-model="form.qAmount" style="width: 370px;" />
+          <el-form-item label="Q&A" prop="qAmount">
+            <el-input v-model="form.qAmount" style="width: 300px;" placeholder="amount" />
           </el-form-item>
-          <el-form-item label="fill in blank amount">
-            <el-input v-model="form.fAmount" style="width: 370px;" />
+          <el-form-item label="fill in blank" prop="fAmount">
+            <el-input v-model="form.fAmount" style="width: 300px;" placeholder="amount" />
           </el-form-item>
           <el-form-item label="status" prop="enabled">
             <el-radio v-for="item in dict.teststrategy_type" :key="item.id" v-model="form.enabled" :label="item.value">{{ item.label }}</el-radio>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button type="text" @click="crud.cancelCU">取消</el-button>
-          <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
+          <el-button type="text" @click="crud.cancelCU">Cancel</el-button>
+          <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">Confirm</el-button>
         </div>
       </el-dialog>
       <!--表格渲染-->
@@ -106,6 +106,15 @@ export default {
       rules: {
         name: [
           { required: true, message: 'Name cannot be empty', trigger: 'blur' }
+        ],
+        qAmount: [
+          { required: true, message: 'Q&A amount cannot be empty', trigger: 'blur' }
+        ],
+        mAmount: [
+          { required: true, message: 'Multiple options amount cannot be empty', trigger: 'blur' }
+        ],
+        fAmount: [
+          { required: true, message: 'Fill in blank amount cannot be empty', trigger: 'blur' }
         ],
         enabled: [
           { required: true, message: 'Status cannot be empty', trigger: 'blur' }
