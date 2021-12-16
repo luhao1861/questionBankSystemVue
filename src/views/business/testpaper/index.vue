@@ -36,8 +36,8 @@
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
       <crudOperation :permission="permission" />
       <!--表单组件-->
-      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
+      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="560px">
+        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="120px">
           <el-form-item label="Name" prop="name">
             <el-input v-model="form.name" style="width: 370px;" />
           </el-form-item>

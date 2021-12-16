@@ -47,9 +47,9 @@
         :before-close="crud.cancelCU"
         :visible.sync="crud.status.cu > 0"
         :title="crud.status.title"
-        width="500px"
+        width="560px"
       >
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
+        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="120px">
           <el-form-item label="className" prop="name">
             <el-input v-model="form.name" style="width: 370px;" />
           </el-form-item>

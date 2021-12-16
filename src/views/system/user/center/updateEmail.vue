@@ -2,20 +2,20 @@
   <div style="display: inline-block;">
     <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="title" append-to-body width="475px" @close="cancel">
       <el-form ref="form" :model="form" :rules="rules" size="small" label-width="88px">
-        <el-form-item label="新邮箱" prop="email">
+        <el-form-item label="New Email" prop="email">
           <el-input v-model="form.email" auto-complete="on" style="width: 200px;" />
           <el-button :loading="codeLoading" :disabled="isDisabled" size="small" @click="sendCode">{{ buttonName }}</el-button>
         </el-form-item>
-        <el-form-item label="验证码" prop="code">
+        <el-form-item label="Code" prop="code">
           <el-input v-model="form.code" style="width: 320px;" />
         </el-form-item>
-        <el-form-item label="当前密码" prop="pass">
+        <el-form-item label="Password" prop="pass">
           <el-input v-model="form.pass" type="password" style="width: 320px;" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="text" @click="cancel">取消</el-button>
-        <el-button :loading="loading" type="primary" @click="doSubmit">确认</el-button>
+        <el-button type="text" @click="cancel">Cancel</el-button>
+        <el-button :loading="loading" type="primary" @click="doSubmit">Confirm</el-button>
       </div>
     </el-dialog>
   </div>
@@ -36,28 +36,28 @@ export default {
   data() {
     const validMail = (rule, value, callback) => {
       if (value === '' || value === null) {
-        callback(new Error('新邮箱不能为空'))
+        callback(new Error('New Email can not be empty'))
       } else if (value === this.email) {
-        callback(new Error('新邮箱不能与旧邮箱相同'))
+        callback(new Error('New Email can not be same as the old one'))
       } else if (validEmail(value)) {
         callback()
       } else {
-        callback(new Error('邮箱格式错误'))
+        callback(new Error('Email format error'))
       }
     }
     return {
-      loading: false, dialog: false, title: '修改邮箱', form: { pass: '', email: '', code: '' },
+      loading: false, dialog: false, title: 'Update E-mail', form: { pass: '', email: '', code: '' },
       user: { email: '', password: '' }, codeLoading: false,
-      buttonName: '获取验证码', isDisabled: false, time: 60,
+      buttonName: 'Send a code', isDisabled: false, time: 60,
       rules: {
         pass: [
-          { required: true, message: '当前密码不能为空', trigger: 'blur' }
+          { required: true, message: 'The current password cannot be empty', trigger: 'blur' }
         ],
         email: [
           { required: true, validator: validMail, trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '验证码不能为空', trigger: 'blur' }
+          { required: true, message: 'Verification code must be filled', trigger: 'blur' }
         ]
       }
     }
@@ -74,7 +74,7 @@ export default {
         resetEmail(this.form.email).then(res => {
           this.$message({
             showClose: true,
-            message: '发送成功，验证码有效期5分钟',
+            message: 'Successfully sent, the verification code is valid for 5 minutes',
             type: 'success'
           })
           this.codeLoading = false

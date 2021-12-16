@@ -14,8 +14,8 @@
       <crudOperation :permission="permission" />
     </div>
     <!--表单组件-->
-    <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
-      <el-form ref="form" inline :model="form" :rules="rules" size="small" label-width="80px">
+    <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="600px">
+      <el-form ref="form" inline :model="form" :rules="rules" size="small" label-width="150px">
         <el-form-item label="Department Name" prop="name">
           <el-input v-model="form.name" style="width: 370px;" />
         </el-form-item>
@@ -30,8 +30,8 @@
         </el-form-item>
         <el-form-item label="Top Department">
           <el-radio-group v-model="form.isTop" style="width: 140px">
-            <el-radio label="1">是</el-radio>
-            <el-radio label="0">否</el-radio>
+            <el-radio label="1">true</el-radio>
+            <el-radio label="0">false</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="Status" prop="enabled">

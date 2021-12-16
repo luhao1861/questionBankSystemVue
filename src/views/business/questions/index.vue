@@ -53,8 +53,10 @@
               <el-form-item label="Content" prop="content">
                 <el-input v-model="form.content" type="textarea" style="width: 370px;" />
               </el-form-item>
-              <el-form-item label="type">
-                <el-radio v-for="item in dict.question_type" :key="item.id" v-model="form.tid" :label="item.value">{{ item.label }}</el-radio>
+              <el-form-item label="Type" prop="tid">
+                <el-radio-group v-model="form.tid">
+                  <el-radio v-for="item in dict.question_type" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+                </el-radio-group>
               </el-form-item>
               <el-form-item label="Course" prop="cids.id">
                 <el-select v-model="form.cids.id" style="width: 140px" placeholder="Course">
@@ -84,6 +86,7 @@
           <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
             <el-table-column type="selection" width="55" />
             <el-table-column prop="content" label="questionContent" />
+            <!--            <el-table-column prop="gender" label="Gender" />-->
             <el-table-column prop="tid" label="Type">
               <template slot-scope="scope">
                 {{ dict.label.question_type[scope.row.tid] }}
@@ -125,10 +128,7 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 import { getCourses } from '@/api/system/sysClass'
-// import Treeselect from '@riophae/vue-treeselect'
-// import { mapGetters } from 'vuex'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-// import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 
 const defaultForm = { id: null, content: null, tid: null, cid: null, enabled: null, answer: null, createBy: null, createTime: null, cids: { id: null }, updateTime: null }
 export default {
